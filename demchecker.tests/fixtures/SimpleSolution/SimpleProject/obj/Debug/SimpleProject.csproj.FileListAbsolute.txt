@@ -1,0 +1,5 @@
+C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleProject\bin\Debug\SimpleProject.dll
+C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleProject\bin\Debug\SimpleProject.pdb
+C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleProject\obj\Debug\SimpleProject.dll
+C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleProject\obj\Debug\SimpleProject.pdb
+C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleProject\obj\Debug\SimpleProject.csprojResolveAssemblyReference.cache

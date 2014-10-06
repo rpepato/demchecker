@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>StructEx</id>
+    <version>1.0.0.0</version>
+    <authors>Roberto Pepato</authors>
+    <owners>Roberto Pepato</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/rpepato/StructEx</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Enables the inspection of the contents of .net solutions and c# projects</description>
+    <releaseNotes>Enable the inspection of the contents of a .net solution with C# projects.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>Source-Code-Analysis CSharpMetadata</tags>
+  </metadata>
+</package>

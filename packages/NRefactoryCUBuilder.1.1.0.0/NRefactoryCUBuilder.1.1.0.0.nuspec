@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NRefactoryCUBuilder</id>
+    <version>1.1.0.0</version>
+    <title>NRefactoryCUBuilder</title>
+    <authors>Roberto Pepato</authors>
+    <owners>Roberto Pepato</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/rpepato/NRefactoryCUBuilder</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Creates NRefactory Compilation Units from .net solutions. Each csharp project, incuding its files, external assemblies and referenced projects are resolved and included on the compilation units</description>
+    <releaseNotes>Creates nrefactory compilation units from .net solution files.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>Source-Code-Analysis CSharpMetadata</tags>
+    <dependencies>
+      <dependency id="ICSharpCode.NRefactory" version="5.3.0" />
+      <dependency id="StructEx" version="1.0.0.0" />
+    </dependencies>
+  </metadata>
+</package>

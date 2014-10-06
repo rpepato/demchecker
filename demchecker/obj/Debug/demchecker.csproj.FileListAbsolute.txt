@@ -1,0 +1,17 @@
+C:\projects\experimental\demchecker\bin\Debug\demchecker.dll
+C:\projects\experimental\demchecker\bin\Debug\demchecker.pdb
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.CSharp.dll
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.dll
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.Xml.dll
+C:\projects\experimental\demchecker\bin\Debug\Mono.Cecil.dll
+C:\projects\experimental\demchecker\bin\Debug\Mono.Cecil.Mdb.dll
+C:\projects\experimental\demchecker\bin\Debug\Mono.Cecil.Pdb.dll
+C:\projects\experimental\demchecker\bin\Debug\Mono.Cecil.Rocks.dll
+C:\projects\experimental\demchecker\bin\Debug\NRefactoryCUBuilder.dll
+C:\projects\experimental\demchecker\bin\Debug\StructEx.dll
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.xml
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.CSharp.xml
+C:\projects\experimental\demchecker\bin\Debug\ICSharpCode.NRefactory.Xml.xml
+C:\projects\experimental\demchecker\obj\Debug\demchecker.dll
+C:\projects\experimental\demchecker\obj\Debug\demchecker.pdb
+C:\projects\experimental\demchecker\obj\Debug\demchecker.csprojResolveAssemblyReference.cache
