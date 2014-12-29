@@ -25,3 +25,5 @@ C:\projects\experimental\demchecker.tests\bin\Debug\SharpTestsEx.Mvc.xml
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.csprojResolveAssemblyReference.cache
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.dll
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.pdb
+C:\projects\experimental\demchecker.tests\bin\Debug\Moq.dll
+C:\projects\experimental\demchecker.tests\bin\Debug\Moq.xml

@@ -10,12 +10,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using demchecker.extension_methods;
+using ICSharpCode.NRefactory;
 
 namespace demchecker
 {
     public class ASTWalker : DepthFirstAstVisitor
     {
         private CSharpAstResolver _resolver;
+        private IList<string> projectNamespaces;
 
         //TODO: CSharpInvocationResult, Testar Arrays, etc
 
@@ -31,6 +34,7 @@ namespace demchecker
             foreach (var project in DemeterAnalysis.Current.CurrentSolution.Projects)
             {
                 DemeterAnalysis.Current.AddProject(project);
+                projectNamespaces = project.GetNamespaceDeclarations();
                 foreach (var file in project.Files)
                 {
                     DemeterAnalysis.Current.AddFiles(file);
@@ -55,17 +59,22 @@ namespace demchecker
 
         public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
         {
+            if (typeDeclaration.ClassType != ClassType.Class)
+            {
+                return;
+            }
             var className = typeDeclaration.Name;
             var fullQualifiedName = _resolver.Resolve(typeDeclaration).Type.FullName;
 
             if (DemeterAnalysis.Current.Classes.FirstOrDefault(c => c.FullQualifiedName == fullQualifiedName) == null)
             {
-
                 DemeterAnalysis.Current.AddClass(new Class()
                 {
                     Name = className,
                     FullQualifiedName = fullQualifiedName
                 });
+
+                DemeterAnalysis.Current.CurrentClass.AddDeclaredType(fullQualifiedName);
 
                 foreach (var variable in typeDeclaration.Descendants.OfType<FieldDeclaration>())
                 {
@@ -107,9 +116,31 @@ namespace demchecker
             base.VisitMethodDeclaration(methodDeclaration);
         }
 
+        public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
+        {
+            base.VisitConstructorDeclaration(constructorDeclaration);
+
+            var constructor = new Method(DemeterAnalysis.Current.CurrentClass, constructorDeclaration.Name);
+            foreach (var parameter in constructorDeclaration.Parameters)
+            {
+                Action<string> action = (fullQualifiedParameterName) => { constructor.AddParameterType(fullQualifiedParameterName); };
+                checkType(_resolver.Resolve(parameter).Type, action);
+            }
+
+            foreach (var variable in constructorDeclaration.Descendants.OfType<VariableInitializer>())
+            {
+                Action<string> action = (fullQualifiedVariableName) => { constructor.AddLocalVariable(fullQualifiedVariableName); };
+                checkType(_resolver.Resolve(variable).Type, action);
+            }
+            DemeterAnalysis.Current.AddMethod(constructor); 
+        }
+
         public override void VisitMemberReferenceExpression(MemberReferenceExpression memberReferenceExpression)
         {
             base.VisitMemberReferenceExpression(memberReferenceExpression);
+
+            DemeterAnalysis.Current.IncrementInspectedInstruction();
+
             if (IsLoDViolation(memberReferenceExpression))
             {
                 var inAMethodBody = IsInAMethodBody(memberReferenceExpression);
@@ -127,13 +158,64 @@ namespace demchecker
 
         private bool IsLoDViolation(MemberReferenceExpression expression)
         {
-            return !(IsPreferredSupplierClass(expression.Target) ||
-                   IsPreferedAcquaitanceClass(expression.Target));
+            var violation =  !(IsPreferredSupplierClass(expression.Target) ||
+                               IsPreferedAcquaitanceClass(expression.Target));
+                               // || IsStaticCall(expression));  --> generating errors
+
+            return violation && IsInKnownNamespace(expression.Target);
         }
-        
+
+        private bool IsInKnownNamespace(Expression expression)
+        {
+            var nameSpace = _resolver.Resolve(expression).Type.Namespace;
+            return projectNamespaces.Contains(nameSpace.ToUpper());
+        }
+
+        private bool IsInLambdaExpression(Expression expression)
+        {
+            return expression.Ancestors.OfType<LambdaExpression>().Any();
+        }
+
+        private bool IsLambdaIdentifier(Expression expression)
+        {
+            var identifierExpression = expression as IdentifierExpression;
+            if (identifierExpression == null)
+            {
+                return false;
+            }
+            var lambdaExpression = expression.Ancestors.OfType<LambdaExpression>().First();
+            var identifiers = lambdaExpression.Parameters;
+            if (identifiers.Count == 0)
+            {
+                return false;
+            }
+            var res = _resolver.Resolve(expression);
+            return identifiers.Any(i => i.Name == identifierExpression.Identifier && _resolver.Resolve(i).Type.Name == res.Type.Name);
+        }
+
         private bool IsPreferredSupplierClass(Expression expression)
         {
-            var typeName = _resolver.Resolve(expression).Type.FullName;
+            if (expression is ThisReferenceExpression || expression is BaseReferenceExpression)
+            {
+                return true;
+            }
+
+            if (IsInLambdaExpression(expression))
+            {
+                if (IsLambdaIdentifier(expression))
+                {
+                    return true;
+                }
+            }
+
+            var resolved = _resolver.Resolve(expression).Type;
+
+            if ((resolved.IsReferenceType.HasValue ? !resolved.IsReferenceType.Value : false))
+            {
+                return true;
+            }
+            
+            var typeName = resolved.FullName;
 
             if (IsInAMethodBody(expression))
             {
@@ -167,14 +249,29 @@ namespace demchecker
         {
             if (type is DefaultResolvedTypeDefinition)
             {
-                return type.GetDefinition().IsStatic && (type.GetDefinition().Accessibility == ICSharpCode.NRefactory.TypeSystem.Accessibility.Public);
+                return type.GetDefinition().IsStatic;  //&& (type.GetDefinition().Accessibility == ICSharpCode.NRefactory.TypeSystem.Accessibility.Public);
+            }
+            return true;
+        }
+
+        private bool IsStaticCall(Expression expression)
+        {
+            var resolvedType = _resolver.Resolve(expression).Type as DefaultResolvedTypeDefinition;
+            var memberExpression = expression as MemberReferenceExpression;
+            if (resolvedType != null && memberExpression != null)
+            {
+                return resolvedType.IsStatic ||
+                            resolvedType.Methods.Any(m => m.IsStatic && m.Name == memberExpression.MemberName ||
+                            resolvedType.Properties.Any(p => p.IsStatic || p.Name == memberExpression.MemberName) ||
+                            resolvedType.Fields.Any(f => f.IsConst || f.Name == memberExpression.MemberName));
             }
             return false;
         }
 
         private bool IsInAMethodBody(AstNode node)
         {
-            return node.Ancestors.OfType<MethodDeclaration>().Any();
+            return (node.Ancestors.OfType<MethodDeclaration>().Any() ||
+                    node.Ancestors.OfType<ConstructorDeclaration>().Any());
         }
     }
 }

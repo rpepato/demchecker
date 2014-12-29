@@ -40,11 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AnotherCustomClass.cs" />
+    <Compile Include="ClassWithoutMembers.cs" />
+    <Compile Include="CustomClass.cs" />
+    <Compile Include="LambdaExpression.cs" />
+    <Compile Include="NoViolations.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="OneReferencePerType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViolationsUsingExternalTypes.cs" />
+    <Compile Include="ViolationsUsingProjectTypes.cs" />
+    <Compile Include="YetAnotherCustomClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

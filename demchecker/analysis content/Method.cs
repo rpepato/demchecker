@@ -14,12 +14,15 @@ namespace demchecker.analysis_content
 
         public IList<string> LocalVariables { get; private set; }
 
+        public IList<Violation> Violations { get; private set; }
+
         public Method(Class klass, string name)
         {
             this.Class = klass;
             this.Name = name;
             this.ParameterTypes = new List<string>();
             LocalVariables = new List<string>();
+            Violations = new List<Violation>();
         }
 
         public void AddLocalVariable(string localVariable)

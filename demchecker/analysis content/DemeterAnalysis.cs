@@ -25,6 +25,8 @@ namespace demchecker.analysis_content
 
         public IList<Violation> Violations { get; private set; }
 
+        public int TotalOfInspectedInstructions { get; private set; }
+
         private DemeterAnalysis()
         {
             Classes = new List<Class>();
@@ -32,6 +34,7 @@ namespace demchecker.analysis_content
             Solutions = new List<Solution>();
             Files = new List<File>();
             Violations = new List<Violation>();
+            TotalOfInspectedInstructions = 0;
         }
 
         public void AddMethod(Method method)
@@ -67,6 +70,16 @@ namespace demchecker.analysis_content
         public void AddViolation(Violation violation)
         {
             DemeterAnalysis.Current.Violations.Add(violation);
+            DemeterAnalysis.Current.CurrentClass.Violations.Add(violation);
+            if (DemeterAnalysis.Current.CurrentMethod != null)
+            {
+                DemeterAnalysis.Current.CurrentMethod.Violations.Add(violation);
+            }
+        }
+
+        public void IncrementInspectedInstruction()
+        {
+            TotalOfInspectedInstructions++;
         }
 
         public static DemeterAnalysis Current { 

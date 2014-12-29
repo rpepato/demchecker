@@ -78,11 +78,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="analysis content\Class.cs" />
+    <Compile Include="analysis content\IViolation.cs" />
     <Compile Include="analysis content\Method.cs" />
     <Compile Include="analysis content\Violation.cs" />
     <Compile Include="ASTWalker.cs" />
     <Compile Include="analysis content\DemeterAnalysis.cs" />
-    <Compile Include="ProgramType.cs" />
+    <Compile Include="CSVExtractor.cs" />
+    <Compile Include="extension methods\ProjectExtension.cs" />
+    <Compile Include="Formatters\CSVFormatter.cs" />
+    <Compile Include="Formatters\IFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

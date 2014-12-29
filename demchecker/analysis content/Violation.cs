@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace demchecker.analysis_content
 {
-    public class Violation
+    public class Violation : IViolation
     {
-        internal Project Project { get; private set; }
+        internal virtual Project Project { get; private set; }
 
-        internal Solution Solution { get; private set; }
+        internal virtual Solution Solution { get; private set; }
 
-        internal File File { get; private set; }
+        internal virtual File File { get; private set; }
 
-        public Class Klass { get; private set; }
+        public virtual Class Klass { get; private set; }
 
-        public Method Method { get; private set; }
+        public virtual Method Method { get; private set; }
 
-        public string ViolationExpression { get; private set; }
+        public virtual string ViolationExpression { get; private set; }
 
-        public int LineNumber { get; private set; }
+        public virtual int LineNumber { get; private set; }
 
         public Violation(Solution solution,
                          Project project,
@@ -40,7 +40,7 @@ namespace demchecker.analysis_content
             Method = method;
         }
 
-        public string ProjectName
+        public virtual string ProjectName
         {
             get
             {
@@ -48,7 +48,7 @@ namespace demchecker.analysis_content
             }
         }
 
-        public string ProjectPath
+        public virtual string ProjectPath
         {
             get
             {
@@ -56,7 +56,7 @@ namespace demchecker.analysis_content
             }
         }
 
-        public string SolutionName
+        public virtual string SolutionName
         {
             get
             {
@@ -64,7 +64,7 @@ namespace demchecker.analysis_content
             }
         }
 
-        public string SolutionPath
+        public virtual string SolutionPath
         {
             get
             {
@@ -72,7 +72,7 @@ namespace demchecker.analysis_content
             }
         }
 
-        public string FileName
+        public virtual string FileName
         {
             get
             {
