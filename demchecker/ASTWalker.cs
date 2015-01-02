@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using demchecker.extension_methods;
 using ICSharpCode.NRefactory;
+using demchecker.Parsers;
 
 namespace demchecker
 {
@@ -19,33 +20,37 @@ namespace demchecker
     {
         private CSharpAstResolver _resolver;
         private IList<string> projectNamespaces;
+        private string _solutionPath;
 
         //TODO: CSharpInvocationResult, Testar Arrays, etc
 
         public ASTWalker(string solutionPath)
         {
-            DemeterAnalysis.Reset();
-            DemeterAnalysis.Current.AddSolution(new Solution(solutionPath));
+            //DemeterAnalysis.Reset();
+            //DemeterAnalysis.Current.AddSolution(new Solution(solutionPath));
+            _solutionPath = solutionPath;
         }
 
         public void Parse()
         {
-            DemeterAnalysis.Current.CurrentSolution.CreateCompilationUnitsForAllPojects();
-            foreach (var project in DemeterAnalysis.Current.CurrentSolution.Projects)
-            {
-                DemeterAnalysis.Current.AddProject(project);
-                projectNamespaces = project.GetNamespaceDeclarations();
-                foreach (var file in project.Files)
-                {
-                    DemeterAnalysis.Current.AddFiles(file);
-                    _resolver = new CSharpAstResolver(DemeterAnalysis.Current.CurrentProject.Compilation,
-                                 DemeterAnalysis.Current.CurrentFile.SyntaxTree,
-                                 DemeterAnalysis.Current.CurrentFile.UnresolvedTypeSystemForFile);
+            var parser = new LoDParser();
+            parser.Parse(_solutionPath);
+            //DemeterAnalysis.Current.CurrentSolution.CreateCompilationUnitsForAllPojects();
+            //foreach (var project in DemeterAnalysis.Current.CurrentSolution.Projects)
+            //{
+            //    DemeterAnalysis.Current.AddProject(project);
+            //    projectNamespaces = project.GetNamespaceDeclarations();
+            //    foreach (var file in project.Files)
+            //    {
+            //        DemeterAnalysis.Current.AddFiles(file);
+            //        _resolver = new CSharpAstResolver(DemeterAnalysis.Current.CurrentProject.Compilation,
+            //                     DemeterAnalysis.Current.CurrentFile.SyntaxTree,
+            //                     DemeterAnalysis.Current.CurrentFile.UnresolvedTypeSystemForFile);
 
-                    file.SyntaxTree.AcceptVisitor(this);
-                    WalkOnAST(file.SyntaxTree);
-                }
-            }
+            //        file.SyntaxTree.AcceptVisitor(this);
+            //        WalkOnAST(file.SyntaxTree);
+            //    }
+            //}
         }
 
         private void WalkOnAST(AstNode node)

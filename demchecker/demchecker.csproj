@@ -87,7 +87,11 @@
     <Compile Include="extension methods\ProjectExtension.cs" />
     <Compile Include="Formatters\CSVFormatter.cs" />
     <Compile Include="Formatters\IFormatter.cs" />
+    <Compile Include="Parsers\IParser.cs" />
+    <Compile Include="Parsers\LoDEParser.cs" />
+    <Compile Include="Parsers\LoDParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Violations\IViolationFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
