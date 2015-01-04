@@ -15,14 +15,14 @@ namespace demchecker.analysis_content
 
         public IList<string> DeclaredTypes { get; private set; }
 
-        public Stack<Method> Methods { get; private set; }
+        public IList<Method> Methods { get; private set; }
 
         public IList<Violation> Violations { get; private set; }
 
         public Class()
         {
             DeclaredTypes = new List<string>();
-            Methods = new Stack<Method>(); // Why this is stack?
+            Methods = new List<Method>(); // Why this is stack?
             Violations = new List<Violation>();
         }
          

@@ -92,6 +92,8 @@
   <ItemGroup>
     <Compile Include="ASTWalkerTests.cs" />
     <Compile Include="Formatters\CSVFormatterTests.cs" />
+    <Compile Include="Formatters\FormatterFactoryTests.cs" />
+    <Compile Include="Parsers\ParserFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

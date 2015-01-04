@@ -91,6 +91,7 @@ namespace demchecker.Parsers
         {
             base.VisitConstructorDeclaration(constructorDeclaration);
             var constructor = new Method(DemeterAnalysis.Current.CurrentClass, constructorDeclaration.Name);
+            DemeterAnalysis.Current.AddMethod(constructor);
  	        CollectConstructorParametersTypes(constructorDeclaration).ForEach(parameter => DemeterAnalysis.Current.CurrentMethod.AddParameterType(parameter));
             CollectMethodScopedVariableTypes(constructorDeclaration).ForEach(var => DemeterAnalysis.Current.CurrentMethod.AddLocalVariable(var));
         }

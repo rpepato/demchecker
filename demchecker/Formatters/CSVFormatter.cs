@@ -19,7 +19,7 @@ namespace demchecker.Formatters
 
         public string Format(IList<IViolation> violations)
         {
-            var header = string.Join(";", new string[] { "Project Name", 
+            var header = string.Join(traillingCharacter.ToString(), new string[] { "Project Name", 
                                                          "File Path", 
                                                          "Class Name", 
                                                          "Method Name", 
@@ -52,7 +52,7 @@ namespace demchecker.Formatters
 
         public string FormatAggregatedResult(IList<IViolation> violations)
         {
-            var header = string.Join(";", new string[] { "Solution", "Project", "File", "Class", "Method", "Count" });
+            var header = string.Join(";", new string[] { "Solution", "Project", "Class", "Method", "Count" });
             var builder = new StringBuilder();
             
             builder.AppendLine(header);
@@ -76,8 +76,7 @@ namespace demchecker.Formatters
                                                              "{1}" + traillingCharacter +
                                                              "{2}" + traillingCharacter +
                                                              "{3}" + traillingCharacter +
-                                                             "{4}"
-                                                             ,
+                                                             "{4}",
                                                              solutionName,
                                                              project,
                                                              klass,

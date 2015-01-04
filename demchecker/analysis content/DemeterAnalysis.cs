@@ -23,7 +23,7 @@ namespace demchecker.analysis_content
         public IList<Solution> Solutions { get; private set; }
         public IList<File> Files { get; private set; }
 
-        public IList<Violation> Violations { get; private set; }
+        internal IList<IViolation> Violations { get; private set; }
 
         public int TotalOfInspectedInstructions { get; private set; }
 
@@ -33,13 +33,13 @@ namespace demchecker.analysis_content
             Projects = new List<Project>();
             Solutions = new List<Solution>();
             Files = new List<File>();
-            Violations = new List<Violation>();
+            Violations = new List<IViolation>();
             TotalOfInspectedInstructions = 0;
         }
 
         public void AddMethod(Method method)
         {
-            DemeterAnalysis.Current.CurrentClass.Methods.Push(method);
+            DemeterAnalysis.Current.CurrentClass.Methods.Add(method);
             DemeterAnalysis.Current.CurrentMethod = method;
         }
 

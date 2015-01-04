@@ -30,7 +30,7 @@ namespace demchecker.tests.Formatters
                                                      "Expression", 
                                                      "Line Number" });
 
-            headerForAggregateResults = string.Join(";", new string[] { "Solution", "Project", "File", "Class", "Method", "Count" });
+            headerForAggregateResults = string.Join(";", new string[] { "Solution", "Project", "Class", "Method", "Count" });
         }
 
         [Test]

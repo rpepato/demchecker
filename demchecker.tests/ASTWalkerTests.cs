@@ -93,15 +93,15 @@ namespace demchecker.tests
         //[Test]
         public void WouldCompileNancyFx()
         {
-            var path = @"C:\projects\experimental\demchecker.tests\fixtures\Nancy\src\Nancy.sln";
-            _parser.Parse(path);
-            var countClasses = DemeterAnalysis.Current.Classes.Select(c => c.FullQualifiedName).Distinct().Count();
-            Console.WriteLine(countClasses);
-            var instructions = DemeterAnalysis.Current.TotalOfInspectedInstructions;
-            Console.WriteLine(instructions);
-            var j = new CSVExtractor(DemeterAnalysis.Current.Violations);
-            j.Generate();
-            j.Full();
+            //var path = @"C:\projects\experimental\demchecker.tests\fixtures\Nancy\src\Nancy.sln";
+            //_parser.Parse(path);
+            //var countClasses = DemeterAnalysis.Current.Classes.Select(c => c.FullQualifiedName).Distinct().Count();
+            //Console.WriteLine(countClasses);
+            //var instructions = DemeterAnalysis.Current.TotalOfInspectedInstructions;
+            //Console.WriteLine(instructions);
+            //var j = new CSVExtractor(DemeterAnalysis.Current.Violations);
+            //j.Generate();
+            //j.Full();
         }
 
         [Test]
