@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3B8880
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lodred_runner", "lodred_runner\lodred_runner.csproj", "{7D2445C4-2B5E-4B36-A18B-A08F8574F808}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demckrunner", "lodred_runner\demckrunner.csproj", "{7D2445C4-2B5E-4B36-A18B-A08F8574F808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
