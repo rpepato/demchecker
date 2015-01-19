@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>demchecker</RootNamespace>
     <AssemblyName>demchecker</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,13 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="analysis content\Class.cs" />
-    <Compile Include="analysis content\IViolation.cs" />
-    <Compile Include="analysis content\Method.cs" />
-    <Compile Include="analysis content\Violation.cs" />
-    <Compile Include="ASTWalker.cs" />
-    <Compile Include="analysis content\DemeterAnalysis.cs" />
-    <Compile Include="CSVExtractor.cs" />
+    <Compile Include="domain\Class.cs" />
+    <Compile Include="domain\IViolation.cs" />
+    <Compile Include="domain\Method.cs" />
+    <Compile Include="domain\Violation.cs" />
+    <Compile Include="domain\DemeterAnalysis.cs" />
     <Compile Include="extension methods\ProjectExtension.cs" />
     <Compile Include="Formatters\CSVFormatter.cs" />
     <Compile Include="Formatters\FormatterFactory.cs" />

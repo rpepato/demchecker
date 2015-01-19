@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace demchecker.analysis_content
+namespace demchecker.domain
 {
    public class Class
     {
@@ -24,16 +24,6 @@ namespace demchecker.analysis_content
             DeclaredTypes = new List<string>();
             Methods = new List<Method>(); // Why this is stack?
             Violations = new List<Violation>();
-        }
-         
-        public bool Equals(Class x, Class y)
-        {
- 	        return x.FullQualifiedName == y.FullQualifiedName;
-        }
-
-        public int GetHashCode(Class obj)
-        {
-            return obj.FullQualifiedName.GetHashCode();
         }
 
        public void AddDeclaredType(string typeName)

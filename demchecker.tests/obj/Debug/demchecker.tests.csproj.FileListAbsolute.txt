@@ -8,6 +8,7 @@ C:\projects\experimental\demchecker.tests\bin\Debug\Mono.Cecil.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\Mono.Cecil.Mdb.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\Mono.Cecil.Pdb.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\Mono.Cecil.Rocks.dll
+C:\projects\experimental\demchecker.tests\bin\Debug\Moq.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\NRefactoryCUBuilder.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\nunit.framework.dll
 C:\projects\experimental\demchecker.tests\bin\Debug\SharpTestsEx.dll
@@ -17,6 +18,7 @@ C:\projects\experimental\demchecker.tests\bin\Debug\demchecker.pdb
 C:\projects\experimental\demchecker.tests\bin\Debug\ICSharpCode.NRefactory.xml
 C:\projects\experimental\demchecker.tests\bin\Debug\ICSharpCode.NRefactory.CSharp.xml
 C:\projects\experimental\demchecker.tests\bin\Debug\ICSharpCode.NRefactory.Xml.xml
+C:\projects\experimental\demchecker.tests\bin\Debug\Moq.xml
 C:\projects\experimental\demchecker.tests\bin\Debug\nunit.framework.xml
 C:\projects\experimental\demchecker.tests\bin\Debug\SharpTestsEx.pdb
 C:\projects\experimental\demchecker.tests\bin\Debug\SharpTestsEx.xml
@@ -25,5 +27,3 @@ C:\projects\experimental\demchecker.tests\bin\Debug\SharpTestsEx.Mvc.xml
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.csprojResolveAssemblyReference.cache
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.dll
 C:\projects\experimental\demchecker.tests\obj\Debug\demchecker.tests.pdb
-C:\projects\experimental\demchecker.tests\bin\Debug\Moq.dll
-C:\projects\experimental\demchecker.tests\bin\Debug\Moq.xml

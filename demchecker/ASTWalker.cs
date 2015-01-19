@@ -1,4 +1,4 @@
-﻿using demchecker.analysis_content;
+﻿using demchecker.domain;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;

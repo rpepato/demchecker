@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace demchecker.analysis_content
+namespace demchecker.domain
 {
     public class Violation : IViolation
     {

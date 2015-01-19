@@ -1,5 +1,5 @@
 ﻿using System;
-namespace demchecker.analysis_content
+namespace demchecker.domain
 {
     interface IViolation
     {

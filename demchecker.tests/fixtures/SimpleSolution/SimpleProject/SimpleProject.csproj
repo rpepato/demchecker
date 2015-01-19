@@ -41,7 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnotherCustomClass.cs" />
+    <Compile Include="ClassWithMethodCallOnPrimitiveTypeInLambdaConstruction.cs" />
+    <Compile Include="ClassWithParameterizedConstructor.cs" />
+    <Compile Include="CustomStruct.cs" />
+    <Compile Include="ClassWithACallOnStaticMethod.cs" />
     <Compile Include="ClassWithoutMembers.cs" />
+    <Compile Include="ClassWithProperties.cs" />
+    <Compile Include="ClassWithPropertiesUsingGenerics.cs" />
     <Compile Include="CustomClass.cs" />
     <Compile Include="LambdaExpression.cs" />
     <Compile Include="NoViolations.cs" />

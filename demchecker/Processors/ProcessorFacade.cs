@@ -1,4 +1,4 @@
-﻿using demchecker.analysis_content;
+﻿using demchecker.domain;
 using demchecker.Formatters;
 using demchecker.Parsers;
 using System;

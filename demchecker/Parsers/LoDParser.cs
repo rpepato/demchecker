@@ -1,4 +1,4 @@
-﻿using demchecker.analysis_content;
+﻿using demchecker.domain;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -72,7 +72,9 @@ namespace demchecker.Parsers
                 DemeterAnalysis.Current.CurrentClass.AddDeclaredType(fullQualifiedClassName);
                 
                 var typeMembers = CollectClassMemberTypes(typeDeclaration);
+                var properties = CollectClassProperties(typeDeclaration);
                 typeMembers.ForEach(member => DemeterAnalysis.Current.CurrentClass.AddDeclaredType(member));
+                properties.ForEach(property => DemeterAnalysis.Current.CurrentClass.AddDeclaredType(property));
 
             }
             base.VisitTypeDeclaration(typeDeclaration);
@@ -89,11 +91,11 @@ namespace demchecker.Parsers
 
         public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
         {
-            base.VisitConstructorDeclaration(constructorDeclaration);
             var constructor = new Method(DemeterAnalysis.Current.CurrentClass, constructorDeclaration.Name);
             DemeterAnalysis.Current.AddMethod(constructor);
  	        CollectConstructorParametersTypes(constructorDeclaration).ForEach(parameter => DemeterAnalysis.Current.CurrentMethod.AddParameterType(parameter));
             CollectMethodScopedVariableTypes(constructorDeclaration).ForEach(var => DemeterAnalysis.Current.CurrentMethod.AddLocalVariable(var));
+            base.VisitConstructorDeclaration(constructorDeclaration);
         }
 
         public override void VisitMemberReferenceExpression(MemberReferenceExpression memberReferenceExpression)
@@ -117,13 +119,18 @@ namespace demchecker.Parsers
 
         protected virtual bool IsViolation(MemberReferenceExpression expression)
         {
+            var methodGroup = Resolver.Resolve(expression) as MethodGroupResolveResult;
+            if (methodGroup != null && methodGroup.Methods.Any(m => m.IsStatic))
+            {
+                return false;
+            }
             return !(IsPreferredSupplier(expression.Target) ||
                      IsPreferredAcquaitanceClass(expression.Target));
         }
 
         protected virtual bool IsPreferredSupplier(Expression expression)
         {
-            if (expression is ThisReferenceExpression || expression is BaseReferenceExpression)
+            if (expression is ThisReferenceExpression)
             {
                 return true;
             }
@@ -204,6 +211,13 @@ namespace demchecker.Parsers
         protected virtual List<string> CollectConstructorParametersTypes(ConstructorDeclaration constructorDeclaration)
         {
             return constructorDeclaration.Parameters.Select(parameter => Resolver.Resolve(parameter).Type.FullName).ToList();
+        }
+
+        protected virtual List<string> CollectClassProperties(TypeDeclaration typeDeclaration)
+        {
+            return typeDeclaration.Descendants.OfType<PropertyDeclaration>().
+                Select(property => Resolver.Resolve(property.ReturnType).Type.FullName).
+                ToList();
         }
 
         private bool IsClassAlreadyParsed(string fullQualifiedName)

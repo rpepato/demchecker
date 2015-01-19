@@ -5,25 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpTestsEx;
-using System.Data.EntityClient;
-using demchecker.analysis_content;
 using demchecker.Parsers;
+using demchecker.domain;
 
-namespace demchecker.tests
+namespace demchecker.tests.Parsers
 {
     [TestFixture]
-    public class ASTWalkerTests
+    class LoDEParserTests
     {
-        private ASTWalker _walker;
-        private LoDEParser _parser;
+        private IParser _parser;
         private string _solutionPath;
 
         [SetUp]
         public void SetUp()
         {
             _solutionPath = @"C:\projects\experimental\demchecker.tests\fixtures\SimpleSolution\SimpleSolution.sln";
-            _walker = new ASTWalker(_solutionPath);
             _parser = new LoDEParser();
+        }
+
+        [Test]
+        public void ShouldCollectClassPropertiesAsRegisteredTypes()
+        {
+            _parser = new LoDEParser();
+            _parser.Parse(_solutionPath);
+            DemeterAnalysis.Current.Classes.First(c => c.Name == "ClassWithPropertiesUsingGenerics").DeclaredTypes.Should().Contain("System.Collections.Generic.IList").And.Contain("System.Int32");
         }
 
         [Test]
@@ -69,6 +74,20 @@ namespace demchecker.tests
         }
 
         [Test]
+        public void ShouldIdentifyConstructorParameters()
+        {
+            _parser.Parse(_solutionPath);
+            DemeterAnalysis.Current.Classes.First(c => c.Name == "ClassWithParameterizedConstructor").Methods.First().ParameterTypes.Should().Contain("System.Int32").And.Contain("System.String");
+        }
+
+        [Test]
+        public void ShouldIdentifyCallsOnPrimitiveTypesInsideLambdaConstructions()
+        {
+            _parser.Parse(_solutionPath);
+            DemeterAnalysis.Current.Classes.First(c => c.Name == "ClassWithMethodCallOnPrimitiveTypeInLambdaConstruction").Violations.Count().Should().Be(0);
+        }
+
+        [Test]
         public void ShouldReportExternalViolations()
         {
             _parser.Parse(_solutionPath);
@@ -88,20 +107,6 @@ namespace demchecker.tests
                 .Violations
                 .GroupBy(g => new { g.ProjectName, g.FileName, g.LineNumber })
                 .Where(grp => grp.Count() > 1).Count().Should().Be(1);
-        }
-
-        //[Test]
-        public void WouldCompileNancyFx()
-        {
-            //var path = @"C:\projects\experimental\demchecker.tests\fixtures\Nancy\src\Nancy.sln";
-            //_parser.Parse(path);
-            //var countClasses = DemeterAnalysis.Current.Classes.Select(c => c.FullQualifiedName).Distinct().Count();
-            //Console.WriteLine(countClasses);
-            //var instructions = DemeterAnalysis.Current.TotalOfInspectedInstructions;
-            //Console.WriteLine(instructions);
-            //var j = new CSVExtractor(DemeterAnalysis.Current.Violations);
-            //j.Generate();
-            //j.Full();
         }
 
         [Test]

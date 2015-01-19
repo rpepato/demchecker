@@ -68,6 +68,17 @@ namespace demchecker.Parsers
             return localScopedVariables;
         }
 
+        protected override List<string> CollectClassProperties(TypeDeclaration typeDeclaration)
+        {
+            var classProperties = new List<string>();
+            Action<string> action = (typeName) => { classProperties.Add(typeName); };
+            foreach(var property in typeDeclaration.Descendants.OfType<PropertyDeclaration>())
+            {
+                PerformActionForAllTypesAndSubTypesOfParameterizedTypes(Resolver.Resolve(property).Type, action);
+            }
+            return classProperties;
+        }
+
         protected override bool IsPreferredSupplier(Expression expression)
         {
             if (IsInLambdaExpression(expression))
